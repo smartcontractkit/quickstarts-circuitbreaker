@@ -2,7 +2,7 @@
 
 ## I. About
 
-The Circuit Breaker contract is a highly configurable proof of concept that can be used with any OCR price feed. It is capable of emitting events or calling custom functions based on predefined conditions, and it comes with an interactive UI that allows users to easily configure and manage the contract.
+This repository contains example contracts of an implementation of a circuit breaker that can be used with any OCR price feed. It is possible to monitor a given contract, specify the price when the circuit breaker will be triggered based on predefined conditions, and then underlying logic of what happens when the circuit breaker is triggered.
 
 ## II. How it works
 
