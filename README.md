@@ -6,18 +6,19 @@ This repository contains example contracts of an implementation of a circuit bre
 
 ## II. How it works
 
-The ExampleImplementation contract can utilize utilize a Chainlink price feed address the BTC/USD price feed on your desired and pass in a value called maxBalance which is the threshold at which the circuit breaker is triggered.. If that limit is breached, and if the “circuit broken” flag is not already set to true, then it performs the upkeep which will increment a counter or bre replaced with your desired logic. 
+The ExampleImplementation contract can utilize utilize a Chainlink price feed address the BTC/USD price feed on your desired and pass in a value called maxBalance which is the threshold at which the circuit breaker is triggered.. If that limit is breached, and if the “circuit broken” flag is not already set to true, then it performs the upkeep which will increment a counter or can be replaced with your desired logic. 
 
 The “circuit broken” flag is set in performUpkeep — this is to prevent it from keep tripping the circuit again and again. This is checked in the isFeedParamsMet ? logic so that performUpkeep is not even triggered if the circuit is already broken (even if the price feed answer > max ). The “circuit broken” flag can be reset to “false” and the max limit can also be reset to change to a different level.
 
 
 ## II. How to utilize the Example
 
-1. Deploy the ExampleImplementation.sol and CircuitBreaker.sol contracts on your desired chain. Save the contract for them both.
-2. Go to https://automation.chain.link/ and click Register new Upkeep.
-3. Select custom logic and for Target contract address, enter the address of CircuitBreaker.sol
-4. Fill in the rest of the field as desired, however, In the Check Data field - pass in the address of the ExampleImplementation.sol contract.
-5. Register and fund your upkeep.
+1. Deploy the ExampleImplementation.sol - while deploying this, the constructor will expect the proxy contract address of the price feed (example: 0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43), the maxBalance (example: 3000000000000 ) and “isEmergencyPossible” flag (which could be set to true if you want the circuit breaking condition to be checked; this allows for this to be turned OFF with false if needed)
+2. Deploy the CircuitBreaker.sol
+3. Go to https://automation.chain.link/ and click Register new Upkeep.
+4. Select custom logic and for Target contract address, enter the address of CircuitBreaker.sol
+5. Fill in the rest of the field as desired, however, In the Check Data field - pass in the address of the ExampleImplementation.sol contract. Note: Use abi.encode this contract address with a 0x in the beginning before entering it as checkData
+6. Register and fund your upkeep.
 
 Now the Chainlink Automation network will watch your contract for these trigger parameters. If the price from the feed you provided is above the maxBalance threshold that was specified, the executeEmergencyAction() function will trigger.
 
