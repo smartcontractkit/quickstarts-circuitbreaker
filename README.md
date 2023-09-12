@@ -10,8 +10,18 @@ The ExampleImplementation contract can utilize utilize a Chainlink price feed ad
 
 The “circuit broken” flag is set in performUpkeep — this is to prevent it from keep tripping the circuit again and again. This is checked in the isFeedParamsMet ? logic so that performUpkeep is not even triggered if the circuit is already broken (even if the price feed answer > max ). The “circuit broken” flag can be reset to “false” and the max limit can also be reset to change to a different level.
 
+## III. Pre-requisites
 
-## II. How to utilize the Example
+Install the chainlink contracts npm package using your preferred package manager
+
+```
+# via pnpm
+$ pnpm add @chainlink/contracts@0.6.1
+# via npm
+$ npm install @chainlink/contracts@0.6.1 --save
+```
+
+## IIII. How to utilize the Example
 
 1. Deploy the ExampleImplementation.sol - while deploying this, the constructor will expect the proxy contract address of the price feed (example: 0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43), the maxBalance (example: 3000000000000 ) and “isEmergencyPossible” flag (which could be set to true if you want the circuit breaking condition to be checked; this allows for this to be turned OFF with false if needed)
 2. Deploy the CircuitBreaker.sol
