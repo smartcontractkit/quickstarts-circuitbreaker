@@ -45,9 +45,7 @@ contract ExampleDataConsumerV3 is Ownable{
      */
     function isFeedParamMet() public view returns (bool) {
         // prettier-ignore
-        if ((getLatestData() > maxbalance) && !circuitbrokenflag) {
-            return true;
-        }
+        return ((getLatestData() > maxbalance) && !circuitbrokenflag);
     }
 
     /**
